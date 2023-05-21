@@ -47,15 +47,20 @@ public class Weapon : MonoBehaviour
 
     IEnumerator Shot()
     {
+        // if문으로 Type을 확인해 권총인지 기관단총인지 확인합니다.
         if (type == Type.Range2)
         {
+            // for문을 이용해 기관단총을 샷건처럼 탄이퍼져서 6발이 동시에 나가게 했습니다. 
+            // 현재는 튜토리얼에만 있는 비활성화 코드
             for (int index = 0; index < 6; index++)
             {
                 GameObject intantBullet = Instantiate(bullet, bulletPos.position, bulletPos.rotation);
-                bulletPos.Rotate(0, 1, 0, 0);  // 각도 조절 코드
+                //bulletPos.rotation의 y값을 1씩 증가시킴으로서 탄환이 부채꼴 모양으로 발사되게 했습니다.
+                bulletPos.Rotate(0, 1, 0, 0);
                 Rigidbody bulletRigid = intantBullet.GetComponent<Rigidbody>();
                 bulletRigid.velocity = bulletPos.forward * 50;
             }
+            //for문이 끝나면 틀어진 bulletPos.rotation값을 다시 초기화 시켜줍니다.
             bulletPos.rotation = new Quaternion(0, 0, 0, 0);
 
             yield return null;
